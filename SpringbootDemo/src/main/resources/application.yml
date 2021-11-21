@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: SpringbootDemo
+  datasource:
+    url: jdbc:mysql://localhost:3306/seiii
+    username: root
+    password: owen890628
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    platform: mysql
+    schema: classpath:schema.sql
+    data: classpath:data.sql
+#    在Spring2:x版本中需加上此行6:
+    initialization-mode: always
+
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+
+server:
+  port: 8090

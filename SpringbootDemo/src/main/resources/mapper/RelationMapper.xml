@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.RelationMapper">
+
+    <!--    原本的API保存不需要修改，只需修改insert方面的，get方面的先不修改试试-->
+
+    <select id="getRelationsByRelation" resultMap="Relation">
+        select * from relation where relation=#{relation}
+    </select>
+
+    <select id="getRelationById" resultMap="Relation">
+        select * from relation where rid=#{rid}
+    </select>
+
+    <select id="getRelationsByTwoEntities" resultMap="Relation">
+        select * from relation
+        where source=#{source} and target=#{target}
+    </select>
+
+    <select id="getRelationsBySourceAndRelation" resultMap="Relation">
+        select * from relation where source=#{source} and relation=#{relation}
+    </select>
+
+    <select id="getRelationsBySource" resultMap="Relation">
+        select * from relation where source=#{source}
+    </select>
+
+    <select id="getRelationsByTarget" resultMap="Relation">
+        select * from relation where target=#{target}
+    </select>
+
+    <select id="getRelationsByTargetAndRelation" resultMap="Relation">
+        select * from relation where target=#{target} and relation=#{relation}
+    </select>
+
+    <!--    addition-0607      -->
+    <insert id="insertRelations">
+        insert into relation (source_id, target_id, source, target, relation, type, hash_id) values
+        <foreach collection="list" item="li"  separator="," >
+            (#{li.source_id}, #{li.target_id}, #{li.source}, #{li.target}, #{li.relation}, #{li.type}, #{li.hash_id})
+        </foreach>
+    </insert>
+
+    <update id="updateRelations">
+        <foreach collection="list" item="rel"  separator="," >
+            update relation set relation = #{rel.relation}, type = #{rel.type}, hash_id = #{rel.hash_id}
+            where rid = #{rel.rid}
+        </foreach>
+    </update>
+
+    <delete id="deleteRelations">
+        <foreach collection="list" item="li"  separator="," >
+            delete from relation where rid = #{li.rid}
+        </foreach>
+    </delete>
+
+    <update id="truncateAllRelations">
+        truncate table relation
+    </update>
+
+    <select id="getAllRelations" resultMap="Relation">
+        select * from relation
+    </select>
+
+    <select id="getConnections" resultType="java.lang.Integer">
+        select count(*) from relation where source=#{content} or target=#{content}
+    </select>
+
+    <resultMap id="Relation" type="com.example.demo.po.Relation">
+        <result column="rid" property="rid"></result>
+        <result column="source_id" property="source_id"></result>
+        <result column="target_id" property="target_id"></result>
+        <result column="source" property="source"></result>
+        <result column="target" property="target"></result>
+        <result column="relation" property="relation"></result>
+        <result column="type" property="type"></result>
+        <result column="hash_id" property="hash_id"></result>
+    </resultMap>
+
+</mapper>

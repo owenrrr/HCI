@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.PositionMapper">
+
+    <select id="getPositionById" resultMap="Position">
+        select * from `position` where id = #{id}
+    </select>
+
+    <select id="getPositions" resultMap="Position">
+        select * from `position`
+    </select>
+
+    <!--    addition-0607   -->
+    <insert id="insertPositions">
+        insert into `position` (id, x, y) values
+        <foreach collection="list" item="li"  separator="," >
+            (#{li.id},#{li.x}, #{li.y})
+        </foreach>
+    </insert>
+
+    <update id="updatePositions">
+        <foreach collection="list" item="li"  separator="," >
+            update `position` set x = #{li.x}, y = #{li.y}
+            where id = #{li.id}
+        </foreach>
+    </update>
+
+    <delete id="deletePositions">
+        <foreach collection="list" item="li"  separator="," >
+            delete from `position` where id = #{li.id}
+        </foreach>
+    </delete>
+
+    <update id="truncateAllPositions">
+        truncate table `position`
+    </update>
+
+    <select id="getAllPositions" resultMap="Position">
+        select * from `position`
+    </select>
+
+    <resultMap id="Position" type="com.example.demo.po.Position">
+        <result column="id" property="id"></result>
+        <result column="x" property="x"></result>
+        <result column="y" property="y"></result>
+    </resultMap>
+
+</mapper>
