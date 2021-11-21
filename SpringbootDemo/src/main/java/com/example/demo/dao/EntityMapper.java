@@ -27,7 +27,7 @@ public interface EntityMapper {
 
     int deleteEntities(@Param("list") List<Entity> list);
 
-    int truncateAllEntities();
+    int truncateAllEntities(@Param("pid") Integer pid);
 
     List<Entity> getAllEntities();
 }

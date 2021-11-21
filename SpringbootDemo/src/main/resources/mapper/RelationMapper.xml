@@ -35,9 +35,9 @@
 
     <!--    addition-0607      -->
     <insert id="insertRelations">
-        insert into relation (source_id, target_id, source, target, relation, type, hash_id) values
+        insert into relation (pid, source_id, target_id, source, target, relation, type, hash_id) values
         <foreach collection="list" item="li"  separator="," >
-            (#{li.source_id}, #{li.target_id}, #{li.source}, #{li.target}, #{li.relation}, #{li.type}, #{li.hash_id})
+            (#{li.pid}, #{li.source_id}, #{li.target_id}, #{li.source}, #{li.target}, #{li.relation}, #{li.type}, #{li.hash_id})
         </foreach>
     </insert>
 
@@ -55,7 +55,8 @@
     </delete>
 
     <update id="truncateAllRelations">
-        truncate table relation
+#         truncate table relation
+        delete from `entity` where pid = #{pid};
     </update>
 
     <select id="getAllRelations" resultMap="Relation">
@@ -68,6 +69,7 @@
 
     <resultMap id="Relation" type="com.example.demo.po.Relation">
         <result column="rid" property="rid"></result>
+        <result column="pid" property="pid"></result>
         <result column="source_id" property="source_id"></result>
         <result column="target_id" property="target_id"></result>
         <result column="source" property="source"></result>

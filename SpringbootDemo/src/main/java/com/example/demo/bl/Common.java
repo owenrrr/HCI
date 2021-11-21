@@ -11,4 +11,8 @@ public interface Common {
 
 
     IOKG getKG();
+
+    void createProject(Integer uid, String name);
+
+    void createUser(String mail, String password);
 }

@@ -15,4 +15,6 @@ public class IOKG {
     EntityVO[] nodes;
 
     RelationVO[] edges;
+
+    Integer pid;
 }

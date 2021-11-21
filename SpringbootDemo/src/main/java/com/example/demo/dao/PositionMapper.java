@@ -26,7 +26,7 @@ public interface PositionMapper {
 
     void deletePositions(@Param("list") List<Position> list);
 
-    int truncateAllPositions();
+    int truncateAllPositions(@Param("pid") Integer pid);
 
     List<Position> getAllPositions();
 

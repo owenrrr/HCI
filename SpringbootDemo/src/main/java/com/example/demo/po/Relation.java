@@ -12,6 +12,8 @@ public class Relation {
 
     private Integer rid;
 
+    private Integer pid;
+
     private String source_id;
 
     private String target_id;
@@ -36,6 +38,16 @@ public class Relation {
         this.hash_id = hash_id;
     }
 
+    public Relation(Integer pid, String source_id, String target_id, String source, String target,
+                    String relation, String hash_id){
+        this.pid = pid;
+        this.source_id = source_id;
+        this.target_id = target_id;
+        this.source = source;
+        this.target = target;
+        this.relation = relation;
+        this.hash_id = hash_id;
+    }
 
     public Relation(){
     }

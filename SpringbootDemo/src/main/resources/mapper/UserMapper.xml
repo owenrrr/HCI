@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.UserMapper">
+
+    <insert id="createUser">
+        insert into `user`(mail, password) value
+        (#{mail}, #{password})
+    </insert>
+
+    <insert id="createProject">
+        insert into `project`(uid, name) value
+            (#{uid}, #{name})
+    </insert>
+
+    <resultMap id="User" type="com.example.demo.po.User">
+        <result column="id" property="id"></result>
+        <result column="password" property="password"></result>
+        <result column="mail" property="nammaile"></result>
+    </resultMap>
+
+    <resultMap id="Project" type="com.example.demo.po.Project">
+        <result column="id" property="id"></result>
+        <result column="uid" property="uid"></result>
+        <result column="name" property="name"></result>
+    </resultMap>
+
+</mapper>

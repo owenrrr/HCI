@@ -37,7 +37,7 @@ public interface RelationMapper {
 
     int deleteRelations(@Param("list") List<Relation> list);
 
-    int truncateAllRelations();
+    int truncateAllRelations(@Param("pid") Integer pid);
 
     List<Relation> getAllRelations();
 

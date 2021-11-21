@@ -29,7 +29,7 @@ import java.util.*;
 public class AnalysisJSON {
 
 //    private static final String CONFIG_PATH ="/var/lib/jenkins/workspace/seiii/SpringbootDemo/src/main/resources/voc/";
-    private static final String CONFIG_PATH = String.valueOf(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "voc"));
+    private static final String CONFIG_PATH = String.valueOf(Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "voc")) + "\\";
 
     @Autowired
     EntityMapper entityMapper;
@@ -42,7 +42,8 @@ public class AnalysisJSON {
      * 切换新的知识图谱
      */
     public void createKG(IOKG IOKG){
-        refreshAllData();
+
+        refreshAllData(IOKG.getPid());
 
         try{
             insertKG(IOKG, new HashMap<String, String>());
@@ -72,6 +73,9 @@ public class AnalysisJSON {
 
     private void insertKG(IOKG IOKG, HashMap<String, String> idToName) throws Exception {
 
+
+        Integer pid = IOKG.getPid();
+
         EntityVO[] entities = IOKG.getNodes();
 
         RelationVO[] relationVOS = IOKG.getEdges();
@@ -93,7 +97,7 @@ public class AnalysisJSON {
 
             idToName.put(eid, name);
 
-            list0.add(new Position(eid, x, y));
+            list0.add(new Position(pid, eid, x, y));
 
             HashMap<String, Object> property = e.getData().getProperty();
             StringBuilder builder = new StringBuilder();
@@ -123,7 +127,7 @@ public class AnalysisJSON {
                 builder.deleteCharAt(builder.length() - 1);
             }
             builder.append(Symbol.CLOSE_BRACE.getSymbol());
-            list1.add(new com.example.demo.po.Entity(eid, name, type, String.valueOf(builder)));
+            list1.add(new com.example.demo.po.Entity(pid, eid, name, type, String.valueOf(builder)));
         }
 
         String source = "", target = "";
@@ -134,7 +138,7 @@ public class AnalysisJSON {
             target_id = r.getData().getTarget();
             source = idToName.get(source_id);
             target = idToName.get(target_id);
-            list2.add(new Relation(source_id, target_id, source, target,
+            list2.add(new Relation(pid, source_id, target_id, source, target,
                     r.getData().getRelation(), r.getData().getId()));
         }
 
@@ -146,19 +150,17 @@ public class AnalysisJSON {
             relationMapper.insertRelations(list2);
         }
 
-        System.out.println("Before addConfigurations.");
-
         addConfigurationFiles();
 
     }
 
-    private void refreshAllData() {
+    private void refreshAllData(Integer pid) {
 
-        entityMapper.truncateAllEntities();
+        entityMapper.truncateAllEntities(pid);
 
-        relationMapper.truncateAllRelations();
+        relationMapper.truncateAllRelations(pid);
 
-        positionMapper.truncateAllPositions();
+        positionMapper.truncateAllPositions(pid);
     }
 
     private void addConfigurationFiles() {

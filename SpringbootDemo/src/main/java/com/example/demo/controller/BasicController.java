@@ -60,4 +60,16 @@ public class BasicController {
         }
         return ResponseVO.buildSuccess(result);
     }
+
+    @PostMapping("/createUser")
+    boolean createUser(@RequestParam("mail") String mail, @RequestParam("password") String password){
+        common.createUser(mail, password);
+        return true;
+    }
+
+    @PostMapping("/createProject")
+    boolean createProject(@RequestParam("uid") Integer uid, @RequestParam("name") String name){
+        common.createProject(uid, name);
+        return true;
+    }
 }

@@ -12,9 +12,9 @@
 
     <!--    addition-0607      -->
     <insert id="insertEntities">
-        insert into entity (eid, name, type, property) values
+        insert into entity (pid, eid, name, type, property) values
         <foreach collection="list" item="li"  separator="," >
-            (#{li.eid}, #{li.name}, #{li.type}, #{li.property})
+            (#{li.pid}, #{li.eid}, #{li.name}, #{li.type}, #{li.property})
         </foreach>
     </insert>
 
@@ -32,7 +32,8 @@
     </delete>
 
     <update id="truncateAllEntities">
-        truncate table entity;
+#         truncate table entity;
+        delete from `entity` where pid = #{pid};
     </update>
 
     <select id="getAllEntities" resultMap="Entity">
@@ -41,6 +42,7 @@
 
     <resultMap id="Entity" type="com.example.demo.po.Entity">
         <result column="eid" property="eid"></result>
+        <result column="pid" property="pid"></result>
         <result column="name" property="name"></result>
         <result column="type" property="type"></result>
         <result column="property" property="property"></result>
