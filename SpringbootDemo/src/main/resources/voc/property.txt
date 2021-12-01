@@ -1,1 +1,1 @@
-职业,皮肤颜色,additionalProp1,逝世,头发颜色,物种,additionalProp3,additionalProp2,出生,血统,性别,婚姻状况,眼睛颜色,学院,身高
+职业,additionalProp1,皮肤颜色,逝世,头发颜色,物种,additionalProp3,additionalProp2,出生,血统,性别,婚姻状况,眼睛颜色,学院,身高

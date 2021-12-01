@@ -18,4 +18,7 @@ public interface UserMapper {
     int createUser(@Param("mail") String mail, @Param("password") String password);
 
     int createProject(@Param("uid") Integer uid, @Param("name") String name);
+
+    int getLastKey();
+
 }

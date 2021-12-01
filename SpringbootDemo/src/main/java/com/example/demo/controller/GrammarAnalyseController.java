@@ -20,8 +20,8 @@ public class GrammarAnalyseController {
 
     @GetMapping("/grammar_analyse")
     @ApiOperation(value = "语义分析", notes = "语义分析")
-    ResponseVO grammarAnalyse(@RequestParam("question") String qs){
-        GrammarToken result = grammarAnalyseService.grammarAnalyse(qs);
+    ResponseVO grammarAnalyse(@RequestParam("question") String qs, @RequestParam("pid") Integer pid){
+        GrammarToken result = grammarAnalyseService.grammarAnalyse(qs, pid);
         return ResponseVO.buildSuccess(result);
     }
 }

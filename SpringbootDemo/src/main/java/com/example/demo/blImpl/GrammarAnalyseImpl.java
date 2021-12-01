@@ -37,7 +37,7 @@ public class GrammarAnalyseImpl implements GrammarAnalyseService {
     @Autowired
     PositionMapper positionMapper;
 
-    public GrammarToken grammarAnalyse(String question) {
+    public GrammarToken grammarAnalyse(String question, Integer pid) {
 
         Segment segment = HanLP.newSegment().enableTranslatedNameRecognize(true);
         List<Term> termList = segment.seg(question);
@@ -60,7 +60,7 @@ public class GrammarAnalyseImpl implements GrammarAnalyseService {
         List<String> nodeIds = new LinkedList<>();
 
         if (formalWords.size() != 0 && formalWords.get(0).type.equals("character")) {
-            subAnalyse(formalWords, res, nodeIds);
+            subAnalyse(formalWords, res, nodeIds, pid);
 
             for (String s : res) {
                 System.out.println(s);
@@ -69,11 +69,11 @@ public class GrammarAnalyseImpl implements GrammarAnalyseService {
             System.out.println("---------------------------------------------");
 
             for (String node : nodeIds) {
-                Entity e = entityMapper.getEntityById(node);
+                Entity e = entityMapper.getEntityById(node, pid);
                 System.out.println(e.getName());
                 HashMap property = JSONObject.parseObject(e.getProperty(), HashMap.class);
                 EData data = new EData(e.getName(), e.getEid(), e.getType(), property);
-                Position position = positionMapper.getPositionById(e.getEid());
+                Position position = positionMapper.getPositionById(e.getEid(), pid);
                 PositionVO positionVO = new PositionVO(position.getX(), position.getY());
                 EntityVO entityVO = new EntityVO(data, positionVO);
 
@@ -84,7 +84,7 @@ public class GrammarAnalyseImpl implements GrammarAnalyseService {
         return new GrammarToken(res, nodes);
     }
 
-    public void subAnalyse(List<Match> words, List<String> res, List<String> nodeIds) {
+    public void subAnalyse(List<Match> words, List<String> res, List<String> nodeIds, int pid) {
         if (words.size() < 2) {
 
             if (words.get(0).type.equals("character")) {
@@ -113,7 +113,7 @@ public class GrammarAnalyseImpl implements GrammarAnalyseService {
             Match entity2 = words.get(1);
 
             if (entity1.type.equals("character") && entity2.type.equals("relation")) {
-                List<Relation> r = relationMapper.getRelationsBySourceAndRelation(entity1.match_content, entity2.match_content);
+                List<Relation> r = relationMapper.getRelationsBySourceAndRelation(entity1.match_content, entity2.match_content, pid);
 
                 if (r.size() == 0) {
                     return;
@@ -123,7 +123,7 @@ public class GrammarAnalyseImpl implements GrammarAnalyseService {
                     words.remove(0);
                     words.remove(0);
                     words.add(0, target);
-                    subAnalyse(words, res, nodeIds);
+                    subAnalyse(words, res, nodeIds, pid);
                 }
                 else {
                     words.remove(0);
@@ -132,13 +132,13 @@ public class GrammarAnalyseImpl implements GrammarAnalyseService {
                         List<Match> tmp = new LinkedList<>(words);
                         Match target = new Match(0, temp.getTarget(), temp.getTarget(), "character");
                         tmp.add(0, target);
-                        subAnalyse(tmp, res, nodeIds);
+                        subAnalyse(tmp, res, nodeIds, pid);
                     }
                 }
             }
             else if (entity1.type.equals("character") && entity2.type.equals("group")) {
                 if (entity2.match_content.equals("成员")) {
-                    List<Relation> r = relationMapper.getRelationsByTargetAndRelation(entity1.match_content, "从属");
+                    List<Relation> r = relationMapper.getRelationsByTargetAndRelation(entity1.match_content, "从属", pid);
                     if (r.size() == 0) {
                         return;
                     }
@@ -147,7 +147,7 @@ public class GrammarAnalyseImpl implements GrammarAnalyseService {
                         words.remove(0);
                         words.remove(0);
                         words.add(0, target);
-                        subAnalyse(words, res, nodeIds);
+                        subAnalyse(words, res, nodeIds, pid);
                     }
                     else {
                         words.remove(0);
@@ -156,12 +156,12 @@ public class GrammarAnalyseImpl implements GrammarAnalyseService {
                             List<Match> tmp = new LinkedList<>(words);
                             Match target = new Match(0, temp.getSource(), temp.getSource(), "character");
                             tmp.add(0, target);
-                            subAnalyse(tmp, res, nodeIds);
+                            subAnalyse(tmp, res, nodeIds, pid);
                         }
                     }
                 }
                 else {
-                    List<Relation> r = relationMapper.getRelationsBySourceAndRelation(entity1.match_content, "从属");
+                    List<Relation> r = relationMapper.getRelationsBySourceAndRelation(entity1.match_content, "从属", pid);
                     if (r.size() == 0) {
                         return;
                     }
@@ -170,7 +170,7 @@ public class GrammarAnalyseImpl implements GrammarAnalyseService {
                         words.remove(0);
                         words.remove(0);
                         words.add(0, target);
-                        subAnalyse(words, res, nodeIds);
+                        subAnalyse(words, res, nodeIds, pid);
                     }
                     else {
                         words.remove(0);
@@ -179,7 +179,7 @@ public class GrammarAnalyseImpl implements GrammarAnalyseService {
                             List<Match> tmp = new LinkedList<>(words);
                             Match target = new Match(0, temp.getTarget(), temp.getTarget(), "character");
                             tmp.add(0, target);
-                            subAnalyse(tmp, res, nodeIds);
+                            subAnalyse(tmp, res, nodeIds, pid);
                         }
                     }
                 }
@@ -202,7 +202,7 @@ public class GrammarAnalyseImpl implements GrammarAnalyseService {
                 }
             }
             else if (entity1.type.equals("character") && entity2.type.equals("character")) {
-                List<Relation> r1 = relationMapper.getRelationsByTwoEntities(entity1.match_content, entity2.match_content);
+                List<Relation> r1 = relationMapper.getRelationsByTwoEntities(entity1.match_content, entity2.match_content, pid);
                 nodeIds.add(entityMapper.getEntityByName(entity1.match_content).getEid());
                 nodeIds.add(entityMapper.getEntityByName(entity2.match_content).getEid());
                 if (r1.size() == 0) {

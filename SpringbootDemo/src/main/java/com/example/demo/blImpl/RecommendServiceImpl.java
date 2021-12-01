@@ -26,7 +26,8 @@ public class RecommendServiceImpl implements RecommendService {
 
     HashMap<String, Integer> entity_frequency = new HashMap<>();
 
-    public HashMap<String, Integer> recommend(String question) {
+    @Override
+    public HashMap<String, Integer> recommend(String question, Integer pid) {
         List<String> keywords = Util.extractKeyword(question, 5);
 
         HashMap<String, List<Match>> result = Util.classifier(keywords);
@@ -54,8 +55,8 @@ public class RecommendServiceImpl implements RecommendService {
         for (Match entity : entities) {
             String ac_ent = entity.match_content;
 
-            List<Relation> relations1 = relationMapper.getRelationsBySource(ac_ent);
-            List<Relation> relations2 = relationMapper.getRelationsByTarget(ac_ent);
+            List<Relation> relations1 = relationMapper.getRelationsBySource(ac_ent, pid);
+            List<Relation> relations2 = relationMapper.getRelationsByTarget(ac_ent, pid);
 
 
             for (Relation r : relations1) {
@@ -68,7 +69,7 @@ public class RecommendServiceImpl implements RecommendService {
 
         int N = 10;
         //推荐家庭关系
-        HashMap<String, Integer> fr = getN(relation, N);
+        HashMap<String, Integer> fr = getN(relation, N, pid);
 
         List<Map.Entry<String, Integer>> frequency = new ArrayList<>(entity_frequency.entrySet());
 
@@ -108,10 +109,10 @@ public class RecommendServiceImpl implements RecommendService {
 
     }
 
-    public HashMap<String, Integer> getN(List<String> r, int N) {
+    public HashMap<String, Integer> getN(List<String> r, int N, int pid) {
         HashMap<String, Integer> f_model = new HashMap<>();
         for (String sr : r) {
-            f_model.put(sr, relationMapper.getConnections(sr));
+            f_model.put(sr, relationMapper.getConnections(sr, pid));
         }
 
         return f_model;

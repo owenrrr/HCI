@@ -25,7 +25,7 @@ public class GrammarAnalyseImplTest {
     @Test
     public void test() {
 
-        GrammarToken grammarToken = grammarAnalyseImpl.grammarAnalyse("哈利波特的爸爸的血统？");
+        GrammarToken grammarToken = grammarAnalyseImpl.grammarAnalyse("哈利波特的爸爸的血统？", 1);
 
 //        assertTrue(list.size() > 0);
 //

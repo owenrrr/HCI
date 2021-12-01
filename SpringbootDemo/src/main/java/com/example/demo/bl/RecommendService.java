@@ -4,5 +4,5 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface RecommendService {
-    HashMap<String, Integer> recommend(String question);
+    HashMap<String, Integer> recommend(String question, Integer pid);
 }

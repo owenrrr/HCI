@@ -10,9 +10,9 @@ import com.example.demo.vo.IOKG;
 public interface Common {
 
 
-    IOKG getKG();
+    IOKG getKG(Integer pid);
 
-    void createProject(Integer uid, String name);
+    int createProject(Integer uid, String name);
 
-    void createUser(String mail, String password);
+    int createUser(String mail, String password);
 }

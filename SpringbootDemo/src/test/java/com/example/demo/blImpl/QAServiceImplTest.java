@@ -27,7 +27,7 @@ public class QAServiceImplTest {
         String question1 = "卡多根的孩子是谁?";
         String question2 = "阿不思邓布利多是谁?";
         String question3 = "阿不思·邓布利多是谁?";
-        String result = qaService.execute(question1);
+        String result = qaService.execute(question1, 1);
         System.out.println(result);
         assertTrue(true);
     }

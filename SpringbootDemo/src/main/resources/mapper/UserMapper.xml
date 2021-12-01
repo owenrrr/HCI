@@ -12,6 +12,10 @@
             (#{uid}, #{name})
     </insert>
 
+    <select id="getLastKey" resultType="int">
+        SELECT LAST_INSERT_ID()
+    </select>
+
     <resultMap id="User" type="com.example.demo.po.User">
         <result column="id" property="id"></result>
         <result column="password" property="password"></result>

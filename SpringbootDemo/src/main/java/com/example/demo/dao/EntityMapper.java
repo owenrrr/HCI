@@ -18,7 +18,7 @@ public interface EntityMapper {
 
     Entity getEntityByName(@Param("name") String name);
 
-    Entity getEntityById(@Param("eid") String eid);
+    Entity getEntityById(@Param("eid") String eid, @Param("pid") Integer pid);
 
     // addition-0607
     int insertEntities(@Param("list") List<Entity> list);
@@ -28,6 +28,8 @@ public interface EntityMapper {
     int deleteEntities(@Param("list") List<Entity> list);
 
     int truncateAllEntities(@Param("pid") Integer pid);
+
+    List<Entity> getEntityByPid(@Param("pid") Integer pid);
 
     List<Entity> getAllEntities();
 }

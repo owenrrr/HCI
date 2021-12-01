@@ -16,19 +16,19 @@ import java.util.List;
 @Repository
 public interface RelationMapper {
 
-    Relation getRelationById(@Param("rid") Integer rid);
+    Relation getRelationById(@Param("rid") Integer rid, @Param("pid") Integer pid);
 
-    List<Relation> getRelationsByRelation(@Param("relation") String relation);
+    List<Relation> getRelationsByRelation(@Param("relation") String relation, @Param("pid") Integer pid);
 
-    List<Relation> getRelationsBySourceAndRelation(@Param("source") String source, @Param("relation") String relation);
+    List<Relation> getRelationsBySourceAndRelation(@Param("source") String source, @Param("relation") String relation, @Param("pid") Integer pid);
 
-    List<Relation> getRelationsByTargetAndRelation(@Param("target") String target, @Param("relation") String relation);
+    List<Relation> getRelationsByTargetAndRelation(@Param("target") String target, @Param("relation") String relation, @Param("pid") Integer pid);
 
-    List<Relation> getRelationsByTwoEntities(@Param("source") String source, @Param("target") String target);
+    List<Relation> getRelationsByTwoEntities(@Param("source") String source, @Param("target") String target, @Param("pid") Integer pid);
 
-    List<Relation> getRelationsBySource(@Param("source") String source);
+    List<Relation> getRelationsBySource(@Param("source") String source, @Param("pid") Integer pid);
 
-    List<Relation> getRelationsByTarget(@Param("target") String target);
+    List<Relation> getRelationsByTarget(@Param("target") String target, @Param("pid") Integer pid);
 
     // addition-0607
     int insertRelations(@Param("list") List<Relation> list);
@@ -41,6 +41,8 @@ public interface RelationMapper {
 
     List<Relation> getAllRelations();
 
-    int getConnections(@Param("content") String content);
+    List<Relation> getRelationsByPid(@Param("pid") Integer pid);
+
+    int getConnections(@Param("content") String content, @Param("pid") Integer pid);
 
 }

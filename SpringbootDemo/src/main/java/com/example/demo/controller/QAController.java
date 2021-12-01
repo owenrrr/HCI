@@ -25,8 +25,8 @@ public class QAController {
 
     @GetMapping("/simple_question")
     @ApiOperation(value = "基本问答", notes = "基本问答")
-    ResponseVO simpleQA(@RequestParam("question") String qs){
-        String result = qaService.execute(qs);
+    ResponseVO simpleQA(@RequestParam("question") String qs, @RequestParam("pid") Integer pid){
+        String result = qaService.execute(qs, pid);
         return ResponseVO.buildSuccess(result);
     }
 }

@@ -78,7 +78,7 @@ public class QAServiceImpl implements QAService {
     }
 
     @Override
-    public String execute(String question) {
+    public String execute(String question, Integer pid) {
 
         // step 1
         List<String> keywords = HanLP.extractKeyword(question, 5);
@@ -156,18 +156,18 @@ public class QAServiceImpl implements QAService {
             List<Relation> match = new ArrayList<>();
 
             // 假定实体是source
-            match = relationMapper.getRelationsBySourceAndRelation(ac_ent, ac_rel);
+            match = relationMapper.getRelationsBySourceAndRelation(ac_ent, ac_rel, pid);
             if (match.size() > 0){
                 return String.format("是%s", match.get(0).getTarget());
             }
             // 假定实体是target
-            match = relationMapper.getRelationsByTargetAndRelation(ac_ent, ac_rel);
+            match = relationMapper.getRelationsByTargetAndRelation(ac_ent, ac_rel, pid);
             if (match.size() > 0){
                 return String.format("是%s", match.get(0).getSource());
             }
             // 由relation查找，遍历结果并再次使用相似度进行匹配
             // 假定任意相似度 > 0.5即可
-            match = relationMapper.getRelationsByRelation(ac_rel);
+            match = relationMapper.getRelationsByRelation(ac_rel, pid);
             float a = 0, b = 0;
             for (Relation r: match){
                 a = JaccardDegree(r.getSource(), ent);
@@ -206,7 +206,7 @@ public class QAServiceImpl implements QAService {
 
             List<Relation> match = new ArrayList<>();
 
-            match = relationMapper.getRelationsByTwoEntities(ent1, ent2);
+            match = relationMapper.getRelationsByTwoEntities(ent1, ent2, pid);
             if (match.size() > 0){
                 return String.format("%s和%s之间的关系是%s", candidate1.content, candidate2.content, match.get(0).getRelation());
             }

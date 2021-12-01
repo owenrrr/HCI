@@ -25,7 +25,7 @@ public class CommonImplTest {
     @Test
     public void getKG() {
 
-        IOKG ioKG = common.getKG();
+        IOKG ioKG = common.getKG(1);
 
         assertTrue(ioKG != null);
 

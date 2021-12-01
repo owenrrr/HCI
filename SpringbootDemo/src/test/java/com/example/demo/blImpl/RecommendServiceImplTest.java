@@ -33,7 +33,7 @@ public class RecommendServiceImplTest {
 
     @Test
     public void execute(){
-        recommendService.recommend("哈利波特的爸爸是谁？");
+        recommendService.recommend("哈利波特的爸爸是谁？", 1);
     }
 
     @Test

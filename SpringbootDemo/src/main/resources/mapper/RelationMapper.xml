@@ -4,33 +4,37 @@
 
     <!--    原本的API保存不需要修改，只需修改insert方面的，get方面的先不修改试试-->
 
+    <select id="getRelationsByPid" resultMap="Relation">
+        select * from relation where pid=#{pid}
+    </select>
+
     <select id="getRelationsByRelation" resultMap="Relation">
-        select * from relation where relation=#{relation}
+        select * from relation where relation=#{relation} and pid=#{pid}
     </select>
 
     <select id="getRelationById" resultMap="Relation">
-        select * from relation where rid=#{rid}
+        select * from relation where rid=#{rid} and pid=#{pid}
     </select>
 
     <select id="getRelationsByTwoEntities" resultMap="Relation">
         select * from relation
-        where source=#{source} and target=#{target}
+        where source=#{source} and target=#{target} and pid=#{pid}
     </select>
 
     <select id="getRelationsBySourceAndRelation" resultMap="Relation">
-        select * from relation where source=#{source} and relation=#{relation}
+        select * from relation where source=#{source} and relation=#{relation} and pid=#{pid}
     </select>
 
     <select id="getRelationsBySource" resultMap="Relation">
-        select * from relation where source=#{source}
+        select * from relation where source=#{source} and pid=#{pid}
     </select>
 
     <select id="getRelationsByTarget" resultMap="Relation">
-        select * from relation where target=#{target}
+        select * from relation where target=#{target} and pid=#{pid}
     </select>
 
     <select id="getRelationsByTargetAndRelation" resultMap="Relation">
-        select * from relation where target=#{target} and relation=#{relation}
+        select * from relation where target=#{target} and relation=#{relation} and pid=#{pid}
     </select>
 
     <!--    addition-0607      -->
@@ -64,7 +68,7 @@
     </select>
 
     <select id="getConnections" resultType="java.lang.Integer">
-        select count(*) from relation where source=#{content} or target=#{content}
+        select count(*) from relation where pid=#{pid} and source=#{content} or target=#{content}
     </select>
 
     <resultMap id="Relation" type="com.example.demo.po.Relation">

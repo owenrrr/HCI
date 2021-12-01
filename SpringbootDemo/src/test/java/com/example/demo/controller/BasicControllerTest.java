@@ -38,7 +38,7 @@ class BasicControllerTest {
     @Transactional
     void getKG() {
 
-        ResponseVO result = basicController.getKG();
+        ResponseVO result = basicController.getKG(1);
 
         assertTrue(result.getSuccess());
 

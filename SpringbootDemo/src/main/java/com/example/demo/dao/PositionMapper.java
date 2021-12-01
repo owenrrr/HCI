@@ -16,7 +16,7 @@ import java.util.List;
 @Repository
 public interface PositionMapper {
 
-    Position getPositionById(@Param("id") String id);
+    Position getPositionById(@Param("id") String id, @Param("pid") Integer pid);
 
     List<Position> getPositions();
 
@@ -27,6 +27,8 @@ public interface PositionMapper {
     void deletePositions(@Param("list") List<Position> list);
 
     int truncateAllPositions(@Param("pid") Integer pid);
+
+    List<Position> getPositionByPid(@Param("pid") Integer pid);
 
     List<Position> getAllPositions();
 

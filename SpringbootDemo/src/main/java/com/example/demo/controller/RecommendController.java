@@ -26,8 +26,8 @@ public class RecommendController {
 
     @GetMapping("/simple_question")
     @ApiOperation(value = "个性化推荐", notes = "个性化推荐")
-    ResponseVO simpleRecommend(@RequestParam("question") String qs){
-        HashMap<String, Integer> result = recommendService.recommend(qs);
+    ResponseVO simpleRecommend(@RequestParam("question") String qs, @RequestParam("pid") Integer pid){
+        HashMap<String, Integer> result = recommendService.recommend(qs, pid);
         return ResponseVO.buildSuccess(result);
     }
 

@@ -39,11 +39,15 @@ public class CommonImpl implements Common {
     UserMapper userMapper;
 
     @Override
-    public IOKG getKG() {
+    public IOKG getKG(Integer pid) {
 
-        List<Entity> entities = entityMapper.getAllEntities();
-        List<Relation> relations = relationMapper.getAllRelations();
-        List<Position> positions = positionMapper.getAllPositions();
+//        List<Entity> entities = entityMapper.getAllEntities();
+//        List<Relation> relations = relationMapper.getAllRelations();
+//        List<Position> positions = positionMapper.getAllPositions();
+
+        List<Entity> entities = entityMapper.getEntityByPid(pid);
+        List<Relation> relations = relationMapper.getRelationsByPid(pid);
+        List<Position> positions = positionMapper.getPositionByPid(pid);
 
         HashMap<String, PositionVO> mapToPos = new HashMap<>();
 
@@ -94,17 +98,23 @@ public class CommonImpl implements Common {
 
 
     @Override
-    public void createUser(String mail, String password){
+    public int createUser(String mail, String password){
         int result = userMapper.createUser(mail, password);
-        assert result > 0;
-        return;
+        if (result <= 0) {
+            return -1;
+        }
+        int id = userMapper.getLastKey();
+        return id;
     }
 
     @Override
-    public void createProject(Integer uid, String name){
+    public int createProject(Integer uid, String name){
         int result = userMapper.createProject(uid, name);
-        assert result > 0;
-        return;
+        if (result <= 0) {
+            return -1;
+        }
+        int id = userMapper.getLastKey();
+        return id;
     }
 
 }

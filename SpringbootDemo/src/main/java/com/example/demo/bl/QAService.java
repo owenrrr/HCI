@@ -8,7 +8,8 @@ import com.example.demo.vo.Characters;
  * @Description:
  */
 public interface QAService {
-    String execute(String question);
+
+    String execute(String question, Integer pid);
 
     float JaccardDegree(String src, String dst);
 

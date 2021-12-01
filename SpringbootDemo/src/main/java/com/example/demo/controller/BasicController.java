@@ -53,8 +53,8 @@ public class BasicController {
     @GetMapping("/getKG")
     @ApiImplicitParam(value = "获取知识图谱")
     @ApiOperation(value = "获取图谱", notes = "获取图谱")
-    ResponseVO getKG(){
-        IOKG result = common.getKG();
+    ResponseVO getKG(@RequestParam("pid") Integer pid){
+        IOKG result = common.getKG(pid);
         if (result == null || result.getEdges().length == 0 || result.getNodes().length == 0){
             return ResponseVO.buildFailure("failed");
         }
@@ -62,14 +62,20 @@ public class BasicController {
     }
 
     @PostMapping("/createUser")
-    boolean createUser(@RequestParam("mail") String mail, @RequestParam("password") String password){
-        common.createUser(mail, password);
-        return true;
+    ResponseVO createUser(@RequestParam("mail") String mail, @RequestParam("password") String password){
+        int user_id = common.createUser(mail, password);
+        if (user_id <= 0) {
+            return ResponseVO.buildFailure("创建失败");
+        }
+        return ResponseVO.buildSuccess(user_id);
     }
 
     @PostMapping("/createProject")
-    boolean createProject(@RequestParam("uid") Integer uid, @RequestParam("name") String name){
-        common.createProject(uid, name);
-        return true;
+    ResponseVO createProject(@RequestParam("uid") Integer uid, @RequestParam("name") String name){
+        int project_id = common.createProject(uid, name);
+        if (project_id <= 0) {
+            return ResponseVO.buildFailure("创建失败");
+        }
+        return ResponseVO.buildSuccess(project_id);
     }
 }
