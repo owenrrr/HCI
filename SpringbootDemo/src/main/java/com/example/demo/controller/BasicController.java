@@ -3,7 +3,9 @@ package com.example.demo.controller;
 import com.example.demo.bl.Common;
 import com.example.demo.util.AnalysisJSON;
 import com.example.demo.vo.IOKG;
+import com.example.demo.vo.ProjectVO;
 import com.example.demo.vo.ResponseVO;
+import com.example.demo.vo.UserVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -28,7 +30,7 @@ public class BasicController {
 
     @PostMapping("/inputKG")
     @ApiImplicitParams(@ApiImplicitParam(name = "IOKG", value = "input knowledge graph", required = true, dataType = "IOKG"))
-    @ApiOperation(value = "新建图谱", notes = "新建图谱")
+    @ApiOperation(value = "编辑图谱", notes = "编辑图谱")
     ResponseVO createKG(@RequestBody IOKG IOKG){
         try{
             analysisJSON.createKG(IOKG);
@@ -38,17 +40,17 @@ public class BasicController {
         return ResponseVO.buildSuccess("success");
     }
 
-    @PostMapping("/addKG")
-    @ApiImplicitParams(@ApiImplicitParam(name = "IOKG", value = "input knowledge graph", required = true, dataType = "IOKG"))
-    @ApiOperation(value = "添加图谱", notes = "添加图谱")
-    ResponseVO addKG(@RequestBody IOKG IOKG){
-        try{
-            analysisJSON.addKG(IOKG);
-        }catch(Exception e){
-            return ResponseVO.buildFailure(e.getMessage());
-        }
-        return ResponseVO.buildSuccess("success");
-    }
+//    @PostMapping("/addKG")
+//    @ApiImplicitParams(@ApiImplicitParam(name = "IOKG", value = "input knowledge graph", required = true, dataType = "IOKG"))
+//    @ApiOperation(value = "添加图谱", notes = "添加图谱")
+//    ResponseVO addKG(@RequestBody IOKG IOKG){
+//        try{
+//            analysisJSON.addKG(IOKG);
+//        }catch(Exception e){
+//            return ResponseVO.buildFailure(e.getMessage());
+//        }
+//        return ResponseVO.buildSuccess("success");
+//    }
 
     @GetMapping("/getKG")
     @ApiImplicitParam(value = "获取知识图谱")
@@ -62,8 +64,10 @@ public class BasicController {
     }
 
     @PostMapping("/createUser")
-    ResponseVO createUser(@RequestParam("mail") String mail, @RequestParam("password") String password){
-        int user_id = common.createUser(mail, password);
+    @ApiImplicitParam(value = "创建用户")
+    @ApiOperation(value = "创建用户", notes = "创建用户")
+    ResponseVO createUser(@RequestBody UserVO userVO){
+        int user_id = common.createUser(userVO.getMail(), userVO.getPassword());
         if (user_id <= 0) {
             return ResponseVO.buildFailure("创建失败");
         }
@@ -71,8 +75,10 @@ public class BasicController {
     }
 
     @PostMapping("/createProject")
-    ResponseVO createProject(@RequestParam("uid") Integer uid, @RequestParam("name") String name){
-        int project_id = common.createProject(uid, name);
+    @ApiImplicitParam(value = "创建项目")
+    @ApiOperation(value = "创建项目", notes = "创建项目")
+    ResponseVO createProject(@RequestBody ProjectVO projectVO){
+        int project_id = common.createProject(projectVO.getUid(), projectVO.getName());
         if (project_id <= 0) {
             return ResponseVO.buildFailure("创建失败");
         }

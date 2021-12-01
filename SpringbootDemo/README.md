@@ -46,3 +46,10 @@ src/main/resources
 - 本地测试，访问 http://localhost:8088/swagger-ui.html
 - 接口、类型、参数、返回类型
 - 采用JSON格式，支持在线测试数据格式
+
+## 配置脚本
+configure.bat 适配Windows
+- 使用方法
+```$xslt
+configure.bat [DATABASE-PASSWORD]
+```
