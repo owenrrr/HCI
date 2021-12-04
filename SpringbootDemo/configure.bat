@@ -7,9 +7,9 @@ set password=%1
 set curdir=%~dp0
 for /f "delims=" %%b in ('type "%curdir%src\main\resources\hanlp-template.properties"') do (
 set "str=%%b"&set "str=!str:%ori_resources%=%resources%!"
-echo !str! >>"%curdir%src\main\resources\hanlp.properties"
+echo !str!>>"%curdir%src\main\resources\hanlp.properties"
 )
 for /f "delims=" %%b in ('type "%curdir%src\main\resources\application-template.yml"') do (
 set "str=%%b"&set "str=!str:%ori_password%=%password%!"
-echo !str! >>"%curdir%src\main\resources\application.yml"
+echo !str!>>"%curdir%src\main\resources\application.yml"
 )
