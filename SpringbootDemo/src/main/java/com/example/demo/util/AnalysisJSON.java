@@ -100,6 +100,7 @@ public class AnalysisJSON {
             list0.add(new Position(pid, eid, x, y));
 
             HashMap<String, Object> property = e.getData().getProperty();
+
             StringBuilder builder = new StringBuilder();
             builder.append(Symbol.OPEN_BRACE.getSymbol());
             for (Map.Entry entry : property.entrySet()) {
@@ -123,7 +124,7 @@ public class AnalysisJSON {
                             Symbol.DOUBLE_QUOTATION.getSymbol() + Symbol.COMMA.getSymbol());
                 }
             }
-            if (builder.length() > 0){
+            if (builder.length() > 1){
                 builder.deleteCharAt(builder.length() - 1);
             }
             builder.append(Symbol.CLOSE_BRACE.getSymbol());
