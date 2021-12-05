@@ -36,8 +36,7 @@
     </delete>
 
     <update id="truncateAllPositions">
-#         truncate table `position`
-        delete from `entity` where pid = #{pid}
+        delete from `position` where pid = #{pid}
     </update>
 
     <select id="getAllPositions" resultMap="Position">
