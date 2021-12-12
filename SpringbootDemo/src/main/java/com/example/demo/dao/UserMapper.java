@@ -21,4 +21,6 @@ public interface UserMapper {
 
     int getLastKey();
 
+    User getUser(@Param("mail") String mail);
+
 }

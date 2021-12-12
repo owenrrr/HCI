@@ -1,6 +1,7 @@
 package com.example.demo.bl;
 
 import com.example.demo.vo.IOKG;
+import com.example.demo.vo.UserVO;
 
 /**
  * @Author: Owen
@@ -15,4 +16,6 @@ public interface Common {
     int createProject(Integer uid, String name);
 
     int createUser(String mail, String password);
+
+    UserVO getUser(String mail);
 }

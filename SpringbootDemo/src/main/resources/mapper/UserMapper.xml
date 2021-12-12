@@ -7,6 +7,10 @@
         (#{mail}, #{password})
     </insert>
 
+    <select id="getUser" resultMap="User">
+        select * from user where mail=#{mail}
+    </select>
+
     <insert id="createProject">
         insert into `project`(uid, name) value
             (#{uid}, #{name})
@@ -19,7 +23,7 @@
     <resultMap id="User" type="com.example.demo.po.User">
         <result column="id" property="id"></result>
         <result column="password" property="password"></result>
-        <result column="mail" property="nammaile"></result>
+        <result column="mail" property="mail"></result>
     </resultMap>
 
     <resultMap id="Project" type="com.example.demo.po.Project">
