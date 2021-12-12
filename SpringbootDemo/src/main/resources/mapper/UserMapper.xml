@@ -16,10 +16,18 @@
         SELECT LAST_INSERT_ID()
     </select>
 
+    <select id="getProjectsByUid" resultMap="Project">
+        select * from project where uid=#{uid}
+    </select>
+
+    <select id="getUserByUid" resultMap="User">
+        select * from user where id=#{uid}
+    </select>
+
     <resultMap id="User" type="com.example.demo.po.User">
         <result column="id" property="id"></result>
         <result column="password" property="password"></result>
-        <result column="mail" property="nammaile"></result>
+        <result column="mail" property="mail"></result>
     </resultMap>
 
     <resultMap id="Project" type="com.example.demo.po.Project">

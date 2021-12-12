@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @Author: Owen
  * @Date: 2021/11/21 22:20
@@ -20,5 +22,9 @@ public interface UserMapper {
     int createProject(@Param("uid") Integer uid, @Param("name") String name);
 
     int getLastKey();
+
+    List<Project> getProjectsByUid(@Param("uid") Integer uid);
+
+    User getUserByUid(@Param("uid") Integer uid);
 
 }

@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.bl.Common;
+import com.example.demo.bl.Iteration2Mod;
 import com.example.demo.util.AnalysisJSON;
 import com.example.demo.vo.IOKG;
 import com.example.demo.vo.ProjectVO;
@@ -12,6 +13,8 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 /**
  * @Author: Owen
@@ -27,6 +30,8 @@ public class BasicController {
     AnalysisJSON analysisJSON;
     @Autowired
     Common common;
+    @Autowired
+    Iteration2Mod iteration2Mod;
 
     @PostMapping("/inputKG")
     @ApiImplicitParams(@ApiImplicitParam(name = "IOKG", value = "input knowledge graph", required = true, dataType = "IOKG"))
@@ -84,4 +89,25 @@ public class BasicController {
         }
         return ResponseVO.buildSuccess(project_id);
     }
+
+    @GetMapping("/getUserProjects")
+    @ApiImplicitParam(value = "获取用户所有项目")
+    ResponseVO getUserProjects(@RequestParam("uid") Integer uid){
+        HashMap<Integer, String> resultMap = iteration2Mod.getUserProjectList(uid);
+        if (resultMap != null) {
+            return ResponseVO.buildSuccess(resultMap);
+        }
+        return ResponseVO.buildFailure("该用户没有项目");
+    }
+
+    @GetMapping("/getUserInfo")
+    @ApiImplicitParam(value = "获取用户所有项目")
+    ResponseVO getUserDetail(@RequestParam("uid") Integer uid){
+        UserVO result = iteration2Mod.getUserInfo(uid);
+        if (result != null) {
+            return ResponseVO.buildSuccess(result);
+        }
+        return ResponseVO.buildFailure("无匹配用户");
+    }
+
 }
