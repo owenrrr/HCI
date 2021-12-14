@@ -93,14 +93,14 @@ public class BasicController {
         }
         UserVO user= common.getUser(userVO.getMail());
         if (user == null) {
-            return ResponseVO.buildSuccess("用户不存在");
+            return ResponseVO.buildFailure("用户不存在");
         }else if(userVO.getPassword() == null || user.getPassword()==null){
-            return ResponseVO.buildSuccess(false);
+            return ResponseVO.buildFailure("用户不存在");
         }else {
             if(userVO.getPassword().equals(user.getPassword())){
                 return ResponseVO.buildSuccess(true);
             }
-            return ResponseVO.buildSuccess(false);
+            return ResponseVO.buildFailure("密码错误");
         }
     }
 
