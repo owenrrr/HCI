@@ -23,6 +23,8 @@ public interface UserMapper {
 
     int getLastKey();
 
+    User getUser(@Param("mail") String mail);
+
     List<Project> getProjectsByUid(@Param("uid") Integer uid);
 
     User getUserByUid(@Param("uid") Integer uid);

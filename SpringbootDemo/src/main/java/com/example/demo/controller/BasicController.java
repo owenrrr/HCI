@@ -82,6 +82,36 @@ public class BasicController {
         return ResponseVO.buildSuccess(user_id);
     }
 
+    @GetMapping("/getUser")
+    @ApiImplicitParam(value = "获得用户信息")
+    @ApiOperation(value = "获取用户", notes = "获取用户")
+    ResponseVO getUser(@RequestParam String mail){
+        UserVO user= common.getUser(mail);
+        if (user == null) {
+            return ResponseVO.buildFailure("用户不存在");
+        }
+        return ResponseVO.buildSuccess(user);
+    }
+    @PostMapping("/checkUser")
+    @ApiImplicitParam(value = "登录")
+    @ApiOperation(value = "用户登录", notes = "用户登录")
+    ResponseVO checkUser(@RequestBody UserVO userVO){
+        if(userVO == null){
+            return ResponseVO.buildFailure("用户参数不正确");
+        }
+        UserVO user= common.getUser(userVO.getMail());
+        if (user == null) {
+            return ResponseVO.buildFailure("用户不存在");
+        }else if(userVO.getPassword() == null || user.getPassword()==null){
+            return ResponseVO.buildFailure("用户不存在");
+        }else {
+            if(userVO.getPassword().equals(user.getPassword())){
+                return ResponseVO.buildSuccess(true);
+            }
+            return ResponseVO.buildFailure("密码错误");
+        }
+    }
+
     @PostMapping("/createProject")
     @ApiImplicitParam(value = "创建项目")
     @ApiOperation(value = "创建项目", notes = "创建项目")

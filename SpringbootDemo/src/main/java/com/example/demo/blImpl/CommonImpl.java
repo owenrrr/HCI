@@ -16,6 +16,7 @@ import com.example.demo.vo.Entity.PositionVO;
 import com.example.demo.vo.IOKG;
 import com.example.demo.vo.Relation.RData;
 import com.example.demo.vo.Relation.RelationVO;
+import com.example.demo.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -105,6 +106,16 @@ public class CommonImpl implements Common {
         }
         int id = userMapper.getLastKey();
         return id;
+    }
+
+    @Override
+    public UserVO getUser(String mail){
+        User user = userMapper.getUser(mail);
+        if(user == null){
+            return new UserVO("","");
+        }
+        UserVO userVO = new UserVO(user.getMail(),user.getPassword());
+        return userVO;
     }
 
     @Override

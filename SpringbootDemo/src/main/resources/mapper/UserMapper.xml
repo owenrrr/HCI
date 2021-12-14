@@ -7,6 +7,10 @@
         (#{mail}, #{password})
     </insert>
 
+    <select id="getUser" resultMap="User">
+        select * from user where mail=#{mail}
+    </select>
+
     <insert id="createProject">
         insert into `project`(uid, name) value
             (#{uid}, #{name})
