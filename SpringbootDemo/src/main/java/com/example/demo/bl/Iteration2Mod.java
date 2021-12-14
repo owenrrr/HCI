@@ -14,4 +14,6 @@ public interface Iteration2Mod {
     HashMap<Integer, String> getUserProjectList(Integer uid);
 
     UserVO getUserInfo(Integer uid);
+
+    Integer removeProject(Integer pid);
 }

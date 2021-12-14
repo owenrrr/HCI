@@ -46,4 +46,10 @@ public class Iteration2ModImpl implements Iteration2Mod {
         return userVO;
     }
 
+    @Override
+    public Integer removeProject(Integer pid){
+        int result = userMapper.deleteProjectByPid(pid);
+        return result;
+    }
+
 }

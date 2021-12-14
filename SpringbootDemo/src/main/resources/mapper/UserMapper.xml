@@ -24,6 +24,10 @@
         select * from user where id=#{uid}
     </select>
 
+    <delete id="deleteProjectByPid">
+        delete from project where id=#{pid}
+    </delete>
+
     <resultMap id="User" type="com.example.demo.po.User">
         <result column="id" property="id"></result>
         <result column="password" property="password"></result>

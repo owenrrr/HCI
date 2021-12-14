@@ -27,4 +27,6 @@ public interface UserMapper {
 
     User getUserByUid(@Param("uid") Integer uid);
 
+    int deleteProjectByPid(@Param("pid") Integer pid);
+
 }

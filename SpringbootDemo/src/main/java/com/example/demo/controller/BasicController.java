@@ -62,8 +62,11 @@ public class BasicController {
     @ApiOperation(value = "获取图谱", notes = "获取图谱")
     ResponseVO getKG(@RequestParam("pid") Integer pid){
         IOKG result = common.getKG(pid);
-        if (result == null || result.getEdges().length == 0 || result.getNodes().length == 0){
-            return ResponseVO.buildFailure("failed");
+        if (result == null){
+            return ResponseVO.buildFailure("获取图谱失败");
+        }
+        if (result.getEdges().length == 0 && result.getNodes().length == 0){
+            return ResponseVO.buildSuccess(result);
         }
         return ResponseVO.buildSuccess(result);
     }
@@ -83,6 +86,8 @@ public class BasicController {
     @ApiImplicitParam(value = "创建项目")
     @ApiOperation(value = "创建项目", notes = "创建项目")
     ResponseVO createProject(@RequestBody ProjectVO projectVO){
+        System.out.println(projectVO.getUid());
+        System.out.println(projectVO.getName());
         int project_id = common.createProject(projectVO.getUid(), projectVO.getName());
         if (project_id <= 0) {
             return ResponseVO.buildFailure("创建失败");
@@ -108,6 +113,15 @@ public class BasicController {
             return ResponseVO.buildSuccess(result);
         }
         return ResponseVO.buildFailure("无匹配用户");
+    }
+
+    @GetMapping("/removeProject")
+    ResponseVO removeProject(@RequestParam("pid") Integer pid) {
+        int result = iteration2Mod.removeProject(pid);
+        if (result == 1) {
+            return ResponseVO.buildSuccess("成功删除项目");
+        }
+        return ResponseVO.buildFailure("删除项目失败");
     }
 
 }
