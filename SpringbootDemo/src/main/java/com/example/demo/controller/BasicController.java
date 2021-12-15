@@ -66,9 +66,6 @@ public class BasicController {
         if (result == null){
             return ResponseVO.buildFailure("获取图谱失败");
         }
-        if (result.getEdges().length == 0 && result.getNodes().length == 0){
-            return ResponseVO.buildSuccess(result);
-        }
         return ResponseVO.buildSuccess(result);
     }
 
@@ -117,8 +114,6 @@ public class BasicController {
     @ApiImplicitParam(value = "创建项目")
     @ApiOperation(value = "创建项目", notes = "创建项目")
     ResponseVO createProject(@RequestBody ProjectVO projectVO){
-        System.out.println(projectVO.getUid());
-        System.out.println(projectVO.getName());
         int project_id = common.createProject(projectVO.getUid(), projectVO.getName());
         if (project_id <= 0) {
             return ResponseVO.buildFailure("创建失败");

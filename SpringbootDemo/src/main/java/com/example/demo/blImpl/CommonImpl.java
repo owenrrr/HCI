@@ -123,8 +123,23 @@ public class CommonImpl implements Common {
         if (result <= 0) {
             return -1;
         }
-        int id = userMapper.getLastKey();
-        return id;
+        int pid = userMapper.getLastKey();
+
+        // 插入范例节点
+        List<Entity> list1 = new ArrayList<>();
+        Entity samp_ent = new Entity(pid, "1", "节点", "individual", "{'节点属性':'节点属性值'}");
+        list1.add(samp_ent);
+        List<Position> list2 = new ArrayList<>();
+        Position samp_pos = new Position(pid, "1", 100.0, 100.0);
+        list2.add(samp_pos);
+        int res1 = entityMapper.insertEntities(list1);
+        positionMapper.insertPositions(list2);
+
+        if (res1 <= 0) {
+            return -1;
+        }
+
+        return pid;
     }
 
 }
