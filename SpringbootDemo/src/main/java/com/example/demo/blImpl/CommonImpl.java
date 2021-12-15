@@ -109,13 +109,12 @@ public class CommonImpl implements Common {
     }
 
     @Override
-    public UserVO getUser(String mail){
+    public User getUser(String mail){
         User user = userMapper.getUser(mail);
         if(user == null){
-            return new UserVO("","");
+            return null;
         }
-        UserVO userVO = new UserVO(user.getMail(),user.getPassword());
-        return userVO;
+        return user;
     }
 
     @Override

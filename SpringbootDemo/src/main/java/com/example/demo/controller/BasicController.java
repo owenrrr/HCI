@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.bl.Common;
 import com.example.demo.bl.Iteration2Mod;
+import com.example.demo.po.User;
 import com.example.demo.util.AnalysisJSON;
 import com.example.demo.vo.IOKG;
 import com.example.demo.vo.ProjectVO;
@@ -86,7 +87,7 @@ public class BasicController {
     @ApiImplicitParam(value = "获得用户信息")
     @ApiOperation(value = "获取用户", notes = "获取用户")
     ResponseVO getUser(@RequestParam String mail){
-        UserVO user= common.getUser(mail);
+        User user= common.getUser(mail);
         if (user == null) {
             return ResponseVO.buildFailure("用户不存在");
         }
@@ -99,14 +100,14 @@ public class BasicController {
         if(userVO == null){
             return ResponseVO.buildFailure("用户参数不正确");
         }
-        UserVO user= common.getUser(userVO.getMail());
+        User user= common.getUser(userVO.getMail());
         if (user == null) {
             return ResponseVO.buildFailure("用户不存在");
         }else if(userVO.getPassword() == null || user.getPassword()==null){
             return ResponseVO.buildFailure("用户不存在");
         }else {
             if(userVO.getPassword().equals(user.getPassword())){
-                return ResponseVO.buildSuccess(true);
+                return ResponseVO.buildSuccess(user);
             }
             return ResponseVO.buildFailure("密码错误");
         }

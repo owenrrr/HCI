@@ -1,5 +1,6 @@
 package com.example.demo.bl;
 
+import com.example.demo.po.User;
 import com.example.demo.vo.IOKG;
 import com.example.demo.vo.UserVO;
 
@@ -17,5 +18,5 @@ public interface Common {
 
     int createUser(String mail, String password);
 
-    UserVO getUser(String mail);
+    User getUser(String mail);
 }
