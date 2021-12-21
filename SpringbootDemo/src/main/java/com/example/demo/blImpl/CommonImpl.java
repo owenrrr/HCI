@@ -104,8 +104,43 @@ public class CommonImpl implements Common {
         if (result <= 0) {
             return -1;
         }
-        int id = userMapper.getLastKey();
-        return id;
+        int uid = userMapper.getLastKey();
+        // 插入范例项目
+        userMapper.createProject(uid, "模板项目");
+        int pid = userMapper.getLastKey();
+        // 插入范例节点
+        List<Entity> list1 = new ArrayList<>();
+        Entity dad_ent = new Entity(pid, "5b1f8384-b731-44e7-a947-31fc080029fc", "父亲", "individual",
+                "{'性别':'男','工作':'教职','年龄':'40岁'}");
+        Entity mom_ent = new Entity(pid, "b27d3d45-585b-4a1d-a74a-97f7fbab9be5", "母亲", "individual",
+                "{'性别':'女','工作':'教职','年龄':'35岁'}");
+        Entity son_ent = new Entity(pid, "415702db-0638-4abe-a956-f0e23b76c510", "儿子", "individual",
+                "{'性别':'男','年龄':'15岁','兴趣':'看书、游泳、打篮球'}");
+        list1.add(dad_ent);
+        list1.add(mom_ent);
+        list1.add(son_ent);
+        List<Position> list2 = new ArrayList<>();
+        Position dad_pos = new Position(pid, "5b1f8384-b731-44e7-a947-31fc080029fc", 1.9820265823878318, 54.805905124095844);
+        Position mom_pos = new Position(pid, "b27d3d45-585b-4a1d-a74a-97f7fbab9be5", 163.50194582924112, 56.09795031055394);
+        Position son_pos = new Position(pid, "415702db-0638-4abe-a956-f0e23b76c510", 88.48410433249299, 181.13977057543852);
+        list2.add(dad_pos);
+        list2.add(mom_pos);
+        list2.add(son_pos);
+        entityMapper.insertEntities(list1);
+        positionMapper.insertPositions(list2);
+        List<Relation> list3 = new ArrayList<>();
+        Relation dad_mom = new Relation(pid, "5b1f8384-b731-44e7-a947-31fc080029fc", "b27d3d45-585b-4a1d-a74a-97f7fbab9be5",
+                "父亲", "母亲", "夫妻", "6403b01d-c925-4a12-a060-e69c04b22fac");
+        Relation dad_son = new Relation(pid, "5b1f8384-b731-44e7-a947-31fc080029fc", "415702db-0638-4abe-a956-f0e23b76c510",
+                "父亲", "儿子", "父子", "c17e5bbf-e430-409d-a20c-fe15b4b0e71e");
+        Relation mom_son = new Relation(pid, "b27d3d45-585b-4a1d-a74a-97f7fbab9be5", "415702db-0638-4abe-a956-f0e23b76c510",
+                "母亲", "儿子", "母子", "0efb956f-6d39-4129-bd98-02bebff19e10");
+        list3.add(dad_mom);
+        list3.add(dad_son);
+        list3.add(mom_son);
+        relationMapper.insertRelations(list3);
+
+        return uid;
     }
 
     @Override
